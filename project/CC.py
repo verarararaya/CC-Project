@@ -72,13 +72,23 @@ def superherocorpus():
 
 
 def allcorpus():
-    a = random.randint(0,len(corpushuman)-1)
-    b = random.randint(0,len(corpusit)-1)
+    score = {'science fiction':0.5,'superhero':0.25,'fantasy':0,'morden':1}
+    a,b = (random.sample(range(0, len(corpushuman)-1), 10),random.sample(range(0, len(corpusit)-1), 10))
+    tagid = 0
+    tagscore = 10
+    temp = 0
+    for i in range(0,10):
+        temp = abs(score[corpushuman['tag'].iloc[i]]-score[corpusit['tag'].iloc[i]])
+        if temp > 0 and temp < tagscore:
+            tagscore = temp
+            tagid = i
+        # atag.append(corpushuman['tag'].iloc[a])
+        # btag.append(corpusit['tag'].iloc[b])
     c = random.randint(0,1)
     if c ==0:
-        text = corpushuman['corpus'].iloc[a]+corpusit['corpus'].iloc[b]
+        text = corpushuman['corpus'].iloc[a[tagid]]+corpusit['corpus'].iloc[b[tagid]]
     else:
-        text = corpusit['corpus'].iloc[b]+corpushuman['corpus'].iloc[a]
+        text = corpusit['corpus'].iloc[b[tagid]]+corpushuman['corpus'].iloc[a[tagid]]
     return text
 
 def mordencorpus():
@@ -118,7 +128,7 @@ def fantasycorpus():
     else:
         text = corpusit[corpusit.tag=='fantasy']['corpus'].iloc[b]+corpushuman[corpushuman.tag=='fantasy']['corpus'].iloc[a]
     return text
-print(superherocorpus())
+print(allcorpus())
 
 
 # print(superherocorpus())
